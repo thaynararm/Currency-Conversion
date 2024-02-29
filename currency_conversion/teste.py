@@ -1,8 +1,8 @@
+import requests
+
 from_currency = 'BTC'
 to_currency = 'ETH'
 amount = 10
-import requests
-
 
 def get_data_API() -> dict:
     url = 'https://cdn.moeda.info/api/latest.json'
@@ -27,5 +27,17 @@ def get_value() -> float:
     else:
         usd = amount/price['rates'][from_currency]
         valor = usd * price['rates'][to_currency]
-
         print(valor)
+
+
+def get_value_simples() -> float:
+    
+    price = dict(get_data_API())
+
+    usd = amount/price['rates'][from_currency]
+    valor = usd * price['rates'][to_currency]
+    print(valor)
+
+
+get_value()
+get_value_simples()
