@@ -14,13 +14,13 @@ def get_data_API() -> dict:
 
     try:
         response = requests.get(url).json()
-        response.raise_for_status()
         quotes = response.items()
     
     except requests.exceptions.RequestException as e:
         return {'error': f'Erro ao obter as taxas de câmbio: {e}'}
 
     return quotes
+
 
 
 # Lógica de conversão
@@ -76,4 +76,5 @@ class CurrencyConverterView(APIView):
         response_data = perform_currency_conversion(from_currency, to_currency, amount)
 
         return Response(response_data)
-    
+
+
