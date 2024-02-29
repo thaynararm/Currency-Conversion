@@ -1,8 +1,13 @@
 import requests
 
-from_currency = 'BTC'
-to_currency = 'ETH'
-amount = 10
+def parametros():
+    from_currency = 'BTC'
+    to_currency = 'ETH'
+    amount = 10
+
+    return from_currency, to_currency, amount
+
+parametros()
 
 def get_data_API() -> dict:
     url = 'https://cdn.moeda.info/api/latest.json'
