@@ -5,6 +5,7 @@ import requests
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 
+
 # Acesso à API de taxas de câmbio
 def get_data_API() -> dict:
     '''Retorna o json da API de taxas de câmbio'''
@@ -21,6 +22,30 @@ def get_data_API() -> dict:
 
     return quotes
 
+
+# Lógica de conversão
+def perform_currency_conversion(from_currency, to_currency, amount) -> dict:
+
+    # Obtém as taxas de câmbio
+    price = dict(get_data_API())
+
+    #Realiza a conversão de moeda
+    if from_currency != to_currency:
+        
+        usd = amount/price['rates'][from_currency]
+        value = usd * price['rates'][to_currency]
+
+        # Retorna o resultado convertido
+        response_data = {
+            'from_currency': from_currency,
+            'to_currency': to_currency,
+            'amount': amount,
+            'converted_amount': value
+        }
+        
+        return response_data
+        
+    return Response({'error': 'A moeda de origem deve ser diferente da moeda final'}, status=status.HTTP_400_BAD_REQUEST)
 
 class CurrencyConverterView(APIView):
 
@@ -48,28 +73,7 @@ class CurrencyConverterView(APIView):
         if not from_currency or not to_currency or amount <= 0:
             return Response({'error': 'A requisição deve receber moeda de origem, moeda final e um valor válido.'}, status=status.HTTP_400_BAD_REQUEST)
         
-        # Obtém as taxas de câmbio
-        price = dict(get_data_API())
+        response_data = perform_currency_conversion(from_currency, to_currency, amount)
 
-        #Realiza a conversão de moeda
-        if from_currency != to_currency:
-            
-            usd = amount/price['rates'][from_currency]
-            value = usd * price['rates'][to_currency]
-
-            # Retorna o resultado convertido
-            response_data = {
-                'from_currency': from_currency,
-                'to_currency': to_currency,
-                'amount': amount,
-                'converted_amount': value
-            }
-            
-            return Response(response_data)
-            
-        return Response({'error': 'A moeda de origem deve ser diferente da moeda final'}, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
-
+        return Response(response_data)
+    
