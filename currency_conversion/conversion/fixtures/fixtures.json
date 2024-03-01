@@ -1,0 +1,12 @@
+[
+    {
+        "from_currency": "USD",
+        "to_currency": "EUR",
+        "amount": "invalid"
+    },
+    {
+        "from_currency": "",
+        "to_currency": "EUR",
+        "amount": 100
+    }
+]
