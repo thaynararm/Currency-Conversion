@@ -1,43 +1,85 @@
 import requests
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework. exceptions import ValidationError
+
 
 from_currency = 'BTC'
 to_currency = 'ETH'
-amount = 10
+amount = 10,9
 
 def get_data_API() -> dict:
+    '''Retorna o json da API de taxas de câmbio'''
+    
     url = 'https://cdn.moeda.info/api/latest.json'
-    r = requests.get(url).json()
-    quotes = r.items()
+
+    try:
+        response = requests.get(url).json()
+        quotes = response.items()
+    
+
+    except requests.exceptions.RequestException as err:
+        raise ValidationError('Erro ao obter as taxas de câmbio: {err}')
 
     return quotes
 
 
-def get_value() -> float:
+
+def perform_currency_conversion(from_currency, to_currency, amount) -> dict:
+    '''Realiza a conversão da moeda'''
+
+    # Obtém as taxas de câmbio
+    exchange_rates = dict(get_data_API())
+
+    from_currency, to_currency, amount = validate_currency_params(from_currency, to_currency, amount, exchange_rates)
+
+
+    usd = amount/exchange_rates['rates'][from_currency]
+    value = round(usd * exchange_rates['rates'][to_currency], 2)
+
+    # Retorna o resultado convertido
+    response_data = {
+        'from_currency': from_currency,
+        'to_currency': to_currency,
+        'amount': amount,
+        'converted_amount': value
+    }
     
-    price = dict(get_data_API())
+    return response_data
+
+
+
+def validate_currency_params(from_currency, to_currency, amount, exchange_rates):
+    '''Verifica e lida com os parâmetros fornecidos'''
+
+    # Garante que a entrada das moedas inicial e final sejam válidas
+    valid_currencies = exchange_rates.get('rates', {})
+    if from_currency not in valid_currencies or to_currency not in valid_currencies:
+        raise ValidationError('A moeda de origem e final devem ser válidas')
     
-    if from_currency == 'USD':
-        valor = amount * price['rates'][to_currency]
-        print(valor)
 
-    elif to_currency == 'USD':
-        valor = amount/price['rates'][from_currency]
-        print(valor)
-
-    else:
-        usd = amount/price['rates'][from_currency]
-        valor = usd * price['rates'][to_currency]
-        print(valor)
+    # if type(amount) != float:
+    #     raise ValidationError('O valor a ser convertido deve ser um número válido.')
 
 
-def get_value_simples() -> float:
+
+    # Garante que a entrada do valor seja do tipo numérico adequado para realizar a conversão.
+    try:
+        amount = float(amount)
+    except (ValueError, TypeError):
+        raise ValidationError('O valor a ser convertido deve ser um número válido. Utilize o "." como separador decimal')
+
+    # Certifica-se de que a conversão de moeda ocorra entre moedas distintas
+    if from_currency == to_currency:
+        raise ValidationError('A moeda de origem deve ser diferente da moeda final')
     
-    price = dict(get_data_API())
 
-    usd = amount/price['rates'][from_currency]
-    valor = usd * price['rates'][to_currency]
-    print(valor)
+    # Validação da entrada dos parâmetros: moeda de origem, valor a ser convertido e moeda final
+    if not from_currency or not to_currency:
+       raise ValidationError('A requisição deve receber moeda de origem e moeda final') 
+       
+    return from_currency, to_currency, amount
 
-
-get_value()
-get_value_simples()
+exchange_rates = dict(get_data_API())
+# print(exchange_rates)
+print(perform_currency_conversion(from_currency, to_currency, amount))
