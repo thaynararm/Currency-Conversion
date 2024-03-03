@@ -38,6 +38,7 @@ def perform_currency_conversion(from_currency, to_currency, amount) -> dict:
         'To Currency': to_currency,
         'Amount': amount,
         'Converted amount': value,
+        'Last Update': exchange_rates['lastupdate']
     }
     
     return response_data
@@ -75,3 +76,7 @@ def validate_currency_params(from_currency, to_currency, amount, exchange_rates)
        raise ValidationError('A requisição deve receber moeda de origem e moeda final.') 
        
     return from_currency, to_currency, amount
+
+quotes = dict(get_data_API())
+quotes_moedas = quotes['rates']
+print(quotes_moedas.keys())

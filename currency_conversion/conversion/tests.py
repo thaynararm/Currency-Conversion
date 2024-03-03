@@ -139,7 +139,7 @@ class PostTestCase(APITestCase):
 
         response = self.client.post(self.base_url, data=data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn('A requisição deve receber moeda de origem, moeda final e valor a ser convertido válidos.', response.data)
+        self.assertIn('A moeda de origem e final devem ser válidas.', response.data)
 
 
     def test_post_incorrect_to_currency(self):
@@ -153,7 +153,7 @@ class PostTestCase(APITestCase):
 
         response = self.client.post(self.base_url, data=data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn('A requisição deve receber moeda de origem, moeda final e valor a ser convertido válidos.', response.data)
+        self.assertIn('A moeda de origem e final devem ser válidas.', response.data)
 
     
     def test_post_incorrect_amount(self):
