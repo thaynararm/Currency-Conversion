@@ -30,7 +30,7 @@ def perform_currency_conversion(from_currency, to_currency, amount) -> dict:
     from_currency, to_currency, amount = validate_currency_params(from_currency, to_currency, amount, exchange_rates)
 
     usd = amount/exchange_rates['rates'][from_currency]
-    value = round(usd * exchange_rates['rates'][to_currency], 2)
+    value = round(usd * exchange_rates['rates'][to_currency], 4)
 
     # Retorna o resultado convertido
     response_data = {
