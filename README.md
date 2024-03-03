@@ -93,7 +93,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"from_currency": "USD", "t
 >
 > **Amount:** Valor a ser convertida.
 >
-> **Converted Amount:** Vaor convertido
+> **Converted Amount:** Valor convertido
 
 ~~~python
 Exemplo de resposta:
