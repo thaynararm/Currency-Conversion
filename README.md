@@ -94,8 +94,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"from_currency": "USD", "t
 > **Amount:** Valor a ser convertida.
 >
 > **Converted Amount:** Vaor convertido
->
-> **Last Update:** Última atualização do câmbio (Horário 
+
 ~~~python
 Exemplo de resposta:
 
@@ -104,7 +103,6 @@ Exemplo de resposta:
 "To Currency":"EUR",
 "Amount":100.0,
 "Converted amount":92.138,
-"Last Update":"2024-03-03T15:49:43.135000+00:00"
 }
 ~~~
 
