@@ -34,10 +34,11 @@ def perform_currency_conversion(from_currency, to_currency, amount) -> dict:
 
     # Retorna o resultado convertido
     response_data = {
-        'from_currency': from_currency,
-        'to_currency': to_currency,
-        'amount': amount,
-        'converted_amount': value
+        'From Currency': from_currency,
+        'To Currency': to_currency,
+        'Amount': amount,
+        'Converted amount': value,
+        'Last Update': exchange_rates['lastupdate']
     }
     
     return response_data
