@@ -1,7 +1,7 @@
 import requests
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework. exceptions import ValidationError
+from rest_framework.exceptions import ValidationError
 
 
 def get_data_API() -> dict:
@@ -50,7 +50,7 @@ def validate_currency_params(from_currency, to_currency, amount, exchange_rates)
     # Garante que a entrada das moedas inicial e final sejam válidas
     valid_currencies = exchange_rates.get('rates', {})
     if from_currency not in valid_currencies or to_currency not in valid_currencies:
-        raise ValidationError('A moeda de origem e final devem ser válidas')
+        raise ValidationError('A moeda de origem e final devem ser válidas.')
 
 
     # Permite que o usuário utilize a vírgula como separador decimal
@@ -67,11 +67,11 @@ def validate_currency_params(from_currency, to_currency, amount, exchange_rates)
 
     # Certifica-se de que a conversão de moeda ocorra entre moedas distintas
     if from_currency == to_currency:
-        raise ValidationError('A moeda de origem deve ser diferente da moeda final')
+        raise ValidationError('A moeda de origem deve ser diferente da moeda final.')
     
 
     # Validação da entrada dos parâmetros: moeda de origem, valor a ser convertido e moeda final
     if not from_currency or not to_currency:
-       raise ValidationError('A requisição deve receber moeda de origem e moeda final') 
+       raise ValidationError('A requisição deve receber moeda de origem e moeda final.') 
        
     return from_currency, to_currency, amount

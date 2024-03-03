@@ -58,7 +58,7 @@ class CurrencyConverterViewSet(viewsets.ViewSet):
 
         # Retorna um erro se a instância do serializador não for válida
         else:
-            raise ValidationError('A requisição deve receber moeda de origem, moeda final e valor a ser convertido')
+            raise ValidationError('A requisição deve receber moeda de origem, moeda final e valor a ser convertido válidos.')
         
         
         

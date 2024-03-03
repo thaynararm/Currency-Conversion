@@ -1,0 +1,32 @@
+[
+    {
+        "from_currency": "BRL",
+        "to_currency": "EUR",
+        "amount": 100
+    },
+    {
+        "from_currency": "incorrect",
+        "to_currency": "EUR",
+        "amount": 100
+    },
+    {
+        "from_currency": "EUR",
+        "to_currency": "incorrect",
+        "amount": 100
+    },
+    {
+        "from_currency": "EUR",
+        "to_currency": "BRL",
+        "amount": "incorrect"
+    },
+    {
+        "from_currency": "EUR",
+        "to_currency": "EUR",
+        "amount": 100
+    },
+    {
+        "from_currency": "EUR",
+        "to_currency": "BRL",
+        "amount": "100,0"
+    }
+]
