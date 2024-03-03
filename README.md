@@ -91,9 +91,9 @@ curl -X POST -H "Content-Type: application/json" -d '{"from_currency": "USD", "t
 >
 > **To Currency:** Código ISO 4217 da moeda de destino.
 >
-> **Amount:** Valor a ser convertida.
+> **Amount:** Valor a ser convertido.
 >
-> **Converted Amount:** Valor convertido
+> **Converted Amount:** Valor convertido.
 
 ~~~python
 Exemplo de resposta:
